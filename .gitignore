@@ -1,0 +1,34 @@
+# Secrets
+.env
+backend/.env
+secrets/
+
+# Project Tools & Temporary Map Files
+*_tree.txt
+*_code_snapshot.txt
+scripts/project_aliases.sh
+project_map.txt
+
+# Python
+venv/
+.venv/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Database & Migrations
+*.sqlite3
+*.db
+backend/alembic/versions/*.pyc
+
+# Frontend (Angular)
+node_modules/
+dist/
+.angular/
+
+# VS Code
+.vscode/
+
+# System/Logs
+*.log
+.DS_Store
