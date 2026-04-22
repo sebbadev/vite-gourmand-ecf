@@ -1,7 +1,7 @@
 #!/bin/bash
 # scripts/generate_shortcuts.sh - Creates localized aliases for the project
-#This script is for project initialization. Don't use to to modify shortcuts. 
-#Instead, edit project_aliases.sh directly with pj_sh.
+#This script is for project initialization. Don't use it to to modify shortcuts. 
+#Instead, edit project_aliases.sh directly (pj_sh)
 #Then run pj_src to refresh them.
 
 PROJECT_ROOT=$(realpath .)
@@ -18,12 +18,18 @@ alias pjd='cd $PROJECT_ROOT/docs'
 alias pjs='cd $PROJECT_ROOT/scripts'
 alias pjx='cd $PROJECT_ROOT/secrets'
 alias pj_sh='nano $PROJECT_ROOT/scripts/project_aliases.sh'
-alias pj_src='source $PROJECT_ROOT/scripts/generate_shortcuts.sh && source $PROJECT_ROOT/scripts/project_aliases.sh && echo "Shortcuts regenerated and reloaded!"'
+alias pj_src='source $PROJECT_ROOT/scripts/project_aliases.sh && echo "Shortcuts regenerated and reloaded!"'
+alias pj_snap='cd $PROJECT_ROOT/scripts/generate_code.sh'
+alias pj_tree='cd $PROJECT_ROOT/scripts/generate_tree.sh'
 
-echo "Project shortcuts loaded! (pj, pjb, pjf, pjd, pjs, pjx, pj_src(source refresh), pj_sh( open shortcuts))"
+echo "Project shortcuts loaded! (pj, pjb, pjf, pjd, pjs, pjx, pj_src(source refresh), pj_sh( open shortcuts)), pj_snap(generate code), pj_tree(generate tree))"
 INNER_EOF
+
+source $SHORTCUTS_FILE"
 
 # Add instructions for the user
 echo "Shortcuts generated in $SHORTCUTS_FILE"
 echo "---"
-echo "Senior Tip: Add 'source $SHORTCUTS_FILE' to your ~/.bashrc to make them permanent."
+echo "To add or modify,  use $SHORTCUTS_FILE, and run 'pj_src' to refresh them in your current terminal session."
+echo "---"
+echo "Add 'source $SHORTCUTS_FILE' to your ~/.bashrc to make them permanent."
