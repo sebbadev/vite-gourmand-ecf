@@ -9,7 +9,7 @@ SHORTCUTS_FILE="$PROJECT_ROOT/scripts/project_aliases.sh"
 
 echo "--- Generating Project Shortcuts ---"
 
-cat <<'EOF' > "$SHORTCUTS_FILE"
+cat <<EOF > "$SHORTCUTS_FILE"
 # Vite & Gourmand Project Aliases
 alias pj='cd $PROJECT_ROOT'
 alias pjb='cd $PROJECT_ROOT/backend'
