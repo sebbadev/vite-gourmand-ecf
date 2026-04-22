@@ -111,7 +111,7 @@ ALTER TYPE public.review_status OWNER TO db_admin;
 CREATE TYPE public.user_role AS ENUM (
     'Administrateur',
     'Chef',
-    'Empoyé',
+    'Employé',
     'Client'
 );
 
