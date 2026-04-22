@@ -9,7 +9,7 @@ SHORTCUTS_FILE="$PROJECT_ROOT/scripts/project_aliases.sh"
 
 echo "--- Generating Project Shortcuts ---"
 
-cat <<INNER_EOF > "$SHORTCUTS_FILE"
+cat <<'EOF' > "$SHORTCUTS_FILE"
 # Vite & Gourmand Project Aliases
 alias pj='cd $PROJECT_ROOT'
 alias pjb='cd $PROJECT_ROOT/backend'
@@ -19,15 +19,15 @@ alias pjs='cd $PROJECT_ROOT/scripts'
 alias pjx='cd $PROJECT_ROOT/secrets'
 alias pj_sh='nano $PROJECT_ROOT/scripts/project_aliases.sh'
 alias pj_src='source $PROJECT_ROOT/scripts/project_aliases.sh && echo "Shortcuts regenerated and reloaded!"'
-alias pj_snap='cd $PROJECT_ROOT/scripts/generate_code.sh'
-alias pj_tree='cd $PROJECT_ROOT/scripts/generate_tree.sh'
+alias pj_snap='$PROJECT_ROOT/scripts/generate_code.sh'
+alias pj_tree='$PROJECT_ROOT/scripts/generate_tree.sh'
 
 echo "Project shortcuts loaded! (pj, pjb, pjf, pjd, pjs, pjx, pj_src(source refresh), pj_sh( open shortcuts)), pj_snap(generate code), pj_tree(generate tree))"
-INNER_EOF
+EOF
 
-source $SHORTCUTS_FILE"
+source $SHORTCUTS_FILE
 
-# Add instructions for the user
+#Add instructions for the user
 echo "Shortcuts generated in $SHORTCUTS_FILE"
 echo "---"
 echo "To add or modify,  use $SHORTCUTS_FILE, and run 'pj_src' to refresh them in your current terminal session."

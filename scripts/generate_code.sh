@@ -9,7 +9,7 @@ echo "--- PROJECT STRUCTURE ---" > "$OUTPUT_FILE"
 tree "$TARGET_DIR" -I 'venv|node_modules|__pycache__|.git' -L 3 >> "$OUTPUT_FILE"
 
 echo -e "\n--- CODE CONTENT ---" >> "$OUTPUT_FILE"
-find "$TARGET_DIR" -type f -name "*.py" -not -path "*/venv/*" -not -path "*/__pycache__/*" | while read -r file; do
+find "$TARGET_DIR" -type f \( -name "*.py" -o -name "*.sh" \) -not -path "*/venv/*" -not -path "*/__pycache__/*" | while read -r file; do
     echo -e "\n\n--- FILE: $file ---" >> "$OUTPUT_FILE"
     cat "$file" >> "$OUTPUT_FILE"
 done
