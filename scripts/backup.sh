@@ -12,7 +12,6 @@ pgdump -u seb_admin -p vite_gourmand > $SOURCE/docs/database/backup_db.sql
 # 2. Synchronisation Rclone
 rclone sync "$SOURCE" "$DESTINATION" \
     --exclude "/venv/**" \
-    --exclude "/.venv/**" \
     --exclude "**/__pycache__/**" \
     --exclude "/dist/**" \
     --exclude "/node_modules/**" \
