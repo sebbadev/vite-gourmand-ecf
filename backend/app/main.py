@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from .database import engine, get_db
-from app.models.models import Base
-from app.routers import users, menus, auth
+from .models.models import Base
+from .routers import users, menus, auth
 
 Base.metadata.create_all(bind=engine)
 
@@ -22,7 +22,7 @@ def test_db(db: Session = Depends(get_db)):
     """Endpoint to test the connection to PostgreSQL"""
     try:
         # We try a very simple query to see if the DB responds
-        db.execute(Base.metadata.tables["users"].select())
+        db.execute(Base.metadata.tables["utilisateurs"].select())
         return {"status": "Database connection successful"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Database connection failed: {str(e)}")

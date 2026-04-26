@@ -5,27 +5,32 @@ from sqlalchemy import (
 from sqlalchemy.orm import relationship, DeclarativeBase
 import enum
 
-# --- 1. Python Enums for Business Logic & Type Safety ---
 
-class DishType(enum.Enum):
+# --- Base & Association Tables ---
+class Base(DeclarativeBase):
+    pass
+
+# --- Python Enums for Business Logic & Type Safety ---
+
+class DishType(str, enum.Enum):
     ENTREE = "Entrée"
     MAIN_DISH = "Plat principal"
     ACCOMPAGNEMENT = "Accompagnement"
     DESSERT = "Dessert"
 
-class Equipment(enum.Enum):
+class Equipment(str, enum.Enum):
     INCLUDED = "Inclus"
     NON_INCLUDED = "Non inclus"
     RETURNED = "Retourné"
 
-class Rating(enum.Enum):
-    CRITICAL = 'Critique'
-    TO_IMPROVE = 'À améliorer'
-    ACCEPTABLE = 'Correct'
-    GOOD = 'Bien'
-    EXCELLENT = 'Excellent'
+class Rating(str, enum.Enum):
+    CRITICAL = "Critique"
+    TO_IMPROVE = "À améliorer"
+    ACCEPTABLE = "Correct"
+    GOOD = "Bien"
+    EXCELLENT = "Excellent"
 
-class OrderStatus(enum.Enum):
+class OrderStatus(str, enum.Enum):
     PENDING = "En attente de validation"
     CONFIRMED = "Acceptée"
     CANCELLED = "Annulée"
@@ -34,27 +39,22 @@ class OrderStatus(enum.Enum):
     DELIVERED = "Livrée"
     COMPLETED = "Terminée"
 
-class PaymentStatus(enum.Enum):    
+class PaymentStatus(str, enum.Enum):    
     DUE = "En attente de règlement"
     CANCELLED = "Annulée"
     PAID = "Réglée"
 
-class ReviewStatus(enum.Enum):
+class ReviewStatus(str, enum.Enum):
     PENDING = "En attente"
     APPROVED = "Approuvé"
     ANSWERED = "Répondu"
     REJECTED = "Rejeté"
 
-class UserRole(enum.Enum):
+class UserRole(str, enum.Enum):
     ADMIN = "Administrateur"
     CHEF = "Chef"
     EMPLOYE = "Employé"
     CLIENT = "Client"
-
-# --- 2. Base & Association Tables ---
-
-class Base(DeclarativeBase):
-    pass
 
 # Association tables for Many-to-Many relationships
 menus_plats = Table(
