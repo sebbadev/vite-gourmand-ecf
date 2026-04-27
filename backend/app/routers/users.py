@@ -30,8 +30,7 @@ def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
         email=user.email,
         password_hash=hashed_password,
         prenom=user.prenom,
-        nom=user.nom,
-        role=models.UserRole.CLIENT
+        nom=user.nom
     )
     
     # 4. Save to PostgreSQL

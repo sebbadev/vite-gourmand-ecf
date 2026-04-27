@@ -10,6 +10,9 @@ import enum
 class Base(DeclarativeBase):
     pass
 
+def __str__(self):
+        return self.value
+
 # --- Python Enums for Business Logic & Type Safety ---
 
 class DishType(str, enum.Enum):
@@ -18,10 +21,18 @@ class DishType(str, enum.Enum):
     ACCOMPAGNEMENT = "Accompagnement"
     DESSERT = "Dessert"
 
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
+
 class Equipment(str, enum.Enum):
     INCLUDED = "Inclus"
     NON_INCLUDED = "Non inclus"
     RETURNED = "Retourné"
+
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
 
 class Rating(str, enum.Enum):
     CRITICAL = "Critique"
@@ -29,6 +40,10 @@ class Rating(str, enum.Enum):
     ACCEPTABLE = "Correct"
     GOOD = "Bien"
     EXCELLENT = "Excellent"
+    
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
 
 class OrderStatus(str, enum.Enum):
     PENDING = "En attente de validation"
@@ -39,10 +54,18 @@ class OrderStatus(str, enum.Enum):
     DELIVERED = "Livrée"
     COMPLETED = "Terminée"
 
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
+
 class PaymentStatus(str, enum.Enum):    
     DUE = "En attente de règlement"
     CANCELLED = "Annulée"
     PAID = "Réglée"
+
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
 
 class ReviewStatus(str, enum.Enum):
     PENDING = "En attente"
@@ -50,11 +73,19 @@ class ReviewStatus(str, enum.Enum):
     ANSWERED = "Répondu"
     REJECTED = "Rejeté"
 
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
+
 class UserRole(str, enum.Enum):
     ADMIN = "Administrateur"
     CHEF = "Chef"
     EMPLOYE = "Employé"
     CLIENT = "Client"
+
+    @staticmethod
+    def list_values(cls):
+        return [role.value for role in cls]
 
 # Association tables for Many-to-Many relationships
 menus_plats = Table(
@@ -101,7 +132,7 @@ class Utilisateur(Base):
     code_postal = Column(String(50))
     ville = Column(String(50))
     pays = Column(String(50))
-    role = Column(Enum(UserRole), name="user_role", nullable=False, default=UserRole.CLIENT)
+    role = Column("role", Enum(UserRole, name="user_role", values_callable=UserRole.list_values), nullable=False, default=UserRole.CLIENT)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     is_deleted = Column(Boolean, default=False)
@@ -149,7 +180,7 @@ class Plat(Base):
     __tablename__ = "plats"
     plat_id = Column(Integer, primary_key=True, index=True)
     titre = Column(String(50), nullable=False)
-    type_de_plat = Column(Enum(DishType), name="dish_types", nullable=False) 
+    type_de_plat = Column("type_de_plat", Enum(DishType, name="dish_types"), nullable=False)
     images_url = Column(String(255))
 
     menus = relationship("Menu", secondary=menus_plats, back_populates="plats")
@@ -166,10 +197,10 @@ class Commande(Base):
     heure_livraison = Column(DateTime(timezone=True), nullable=False)
     prix_total = Column(Float, nullable=False)
     remise_appliquee = Column(Float)
-    statut = Column(Enum(OrderStatus), name="order_status", default=OrderStatus.PENDING)
+    statut = Column("statut", Enum(OrderStatus, name="order_status", values_callable=OrderStatus.list_values), default=OrderStatus.PENDING)
     date_commande = Column(DateTime(timezone=True), server_default=func.now())
-    statut_paiement = Column(Enum(PaymentStatus), name="payment_status", default=PaymentStatus.DUE)
-    statut_materiel = Column(Enum(Equipment), name="equipment", default=Equipment.INCLUDED)
+    statut_paiement = Column("statut_paiement", Enum(PaymentStatus, name="payment_status", values_callable=PaymentStatus.list_values), default=PaymentStatus.DUE)
+    statut_materiel = Column("statut_materiel", Enum(Equipment, name="equipment", values_callable=Equipment.list_values), default=Equipment.INCLUDED)
     is_deleted = Column(Boolean, default=False)
 
     client = relationship("Utilisateur", back_populates="commandes")
@@ -191,10 +222,10 @@ class Avis(Base):
     description = Column(Text, nullable=False)
     user_id = Column(Integer, ForeignKey("utilisateurs.user_id"))
     menu_id = Column(Integer, ForeignKey("menus.menu_id"))
-    statut = Column(Enum(ReviewStatus), name="review_status", default=ReviewStatus.PENDING)
-    qualite = Column(Enum(Rating), name="rating")
-    service = Column(Enum(Rating)name="rating")
-    prix = Column(Enum(Rating)name="rating")
+    statut = Column("statut", Enum(ReviewStatus, name="review_status", values_callable=ReviewStatus.list_values), default=ReviewStatus.PENDING)
+    qualite = Column("qualite", Enum(Rating, name="rating", values_callable=Rating.list_values))
+    service = Column("service", Enum(Rating, name="rating", values_callable=Rating.list_values))
+    prix = Column("prix", Enum(Rating, name="rating", values_callable=Rating.list_values))
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     is_deleted = Column(Boolean, default=False)
 

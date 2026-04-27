@@ -4,7 +4,7 @@ from .database import engine, get_db
 from .models.models import Base
 from .routers import users, menus, auth
 
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
 
 # Initialize the FastAPI app
 app = FastAPI(title="Vite & Gourmand API")
