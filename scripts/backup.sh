@@ -7,7 +7,7 @@ DESTINATION="gdev:dev/projects/vite-gourmand"
 echo "🚀 Démarrage de la sauvegarde miroir vers Google Drive..."
 
 # 1. Sauvegarde de la DB
-pgdump -u seb_admin -p vite_gourmand > $SOURCE/docs/database/backup_db.sql
+pg_dump -u seb_admin -p vite_gourmand > $SOURCE/docs/database/backup_db.sql
 
 # 2. Synchronisation Rclone
 rclone sync "$SOURCE" "$DESTINATION" \
