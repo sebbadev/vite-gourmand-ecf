@@ -55,7 +55,7 @@ class UserBase(BaseModel):
     prenom: str
     nom: str
     telephone: Optional[str] = None
-    role: UserRole = UserRole.CLIENT
+
 
 class UserCreate(UserBase):
     password: str # Used only for registration
@@ -63,7 +63,7 @@ class UserCreate(UserBase):
 class UserRead(UserBase):
     user_id: int
     created_at: datetime
-    
+    role: UserRole
     model_config = ConfigDict(from_attributes=True)
 
 # --- 5. Order Schemas ---
