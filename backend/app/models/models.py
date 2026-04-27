@@ -101,8 +101,7 @@ class Utilisateur(Base):
     code_postal = Column(String(50))
     ville = Column(String(50))
     pays = Column(String(50))
-    # Using the UserRole Enum class
-    role = Column(Enum(UserRole), nullable=False, default=UserRole.CLIENT)
+    role = Column(Enum(UserRole), name="user_role", nullable=False, default=UserRole.CLIENT)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
     is_deleted = Column(Boolean, default=False)
@@ -150,7 +149,7 @@ class Plat(Base):
     __tablename__ = "plats"
     plat_id = Column(Integer, primary_key=True, index=True)
     titre = Column(String(50), nullable=False)
-    type_de_plat = Column(Enum(DishType), nullable=False) # Linked to DishType Enum
+    type_de_plat = Column(Enum(DishType), name="dish_types", nullable=False) 
     images_url = Column(String(255))
 
     menus = relationship("Menu", secondary=menus_plats, back_populates="plats")
@@ -167,10 +166,10 @@ class Commande(Base):
     heure_livraison = Column(DateTime(timezone=True), nullable=False)
     prix_total = Column(Float, nullable=False)
     remise_appliquee = Column(Float)
-    statut = Column(Enum(OrderStatus), default=OrderStatus.PENDING)
+    statut = Column(Enum(OrderStatus), name="order_status", default=OrderStatus.PENDING)
     date_commande = Column(DateTime(timezone=True), server_default=func.now())
-    statut_paiement = Column(Enum(PaymentStatus), default=PaymentStatus.DUE)
-    statut_materiel = Column(Enum(Equipment), default=Equipment.INCLUDED)
+    statut_paiement = Column(Enum(PaymentStatus), name="payment_status", default=PaymentStatus.DUE)
+    statut_materiel = Column(Enum(Equipment), name="equipment", default=Equipment.INCLUDED)
     is_deleted = Column(Boolean, default=False)
 
     client = relationship("Utilisateur", back_populates="commandes")
@@ -192,10 +191,10 @@ class Avis(Base):
     description = Column(Text, nullable=False)
     user_id = Column(Integer, ForeignKey("utilisateurs.user_id"))
     menu_id = Column(Integer, ForeignKey("menus.menu_id"))
-    statut = Column(Enum(ReviewStatus), default=ReviewStatus.PENDING)
-    qualite = Column(Enum(Rating))
-    service = Column(Enum(Rating))
-    prix = Column(Enum(Rating))
+    statut = Column(Enum(ReviewStatus), name="review_status", default=ReviewStatus.PENDING)
+    qualite = Column(Enum(Rating), name="rating")
+    service = Column(Enum(Rating)name="rating")
+    prix = Column(Enum(Rating)name="rating")
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     is_deleted = Column(Boolean, default=False)
 
