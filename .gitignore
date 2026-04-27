@@ -9,6 +9,9 @@ secrets/
 scripts/project_aliases.sh
 project_map.txt
 
+#temporary work folders
+temp/
+
 # Python
 venv/
 .venv/

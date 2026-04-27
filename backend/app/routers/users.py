@@ -31,11 +31,10 @@ def signup(user: schemas.UserCreate, db: Session = Depends(get_db)):
         password_hash=hashed_password,
         prenom=user.prenom,
         nom=user.nom,
-        role="CLIENT"
+        role=models.UserRole.CLIENT
     )
     
-    # 4. Save to Postgr
-    eSQL
+    # 4. Save to PostgreSQL
     db.add(new_user)
     db.commit()
     db.refresh(new_user)
